@@ -1,2 +1,2 @@
 // API Key
-const API_KEY = "keyhere";
+const API_KEY = "pk.eyJ1Ijoia2NvbWFsbGV5MTQiLCJhIjoiY2tqcHVtdG45MTFybjJ3cGVsb2dsMWNoZyJ9.FCvX1joLV78dXE9U0E_QFg"

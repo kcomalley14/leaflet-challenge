@@ -19,6 +19,7 @@ var darkmap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z
 var myMap = L.map("mapid", {
   center: [37.7749, -97.4194],
   zoom: 4,
+  layer: [streetmap, darkmap]
 });
 
 streetmap.addTo(myMap);
@@ -31,10 +32,10 @@ d3.json(queryUrl, function(data) {
   function mapStyling(features) {
     return {
       opacity: 1,
-      fillColor: mapColor(feature.properties.mag),
+      fillColor: mapColor(features.properties.mag),
       fillOpacity: 1,
       color: "white",
-      radius: mapRadius(feature.properties.mag),
+      radius: mapRadius(features.properties.mag),
       stroke: true,
       weight: 0.5
     };
@@ -42,17 +43,17 @@ d3.json(queryUrl, function(data) {
   function mapColor(mag) {
     switch (true) {
       case mag > 5:
-        return "red";
+        return "#D10B0B";
       case mag > 4:
-        return "lightred";
+        return "#FF3002";
       case mag > 3:
-        return "orange";
+        return "#FF510B";
       case mag > 2:
-        return "lightorange";
+        return "#FA972D";
       case mag > 1:
-        return "yellow";
+        return "#F7FE1B";
       default:
-        return "green";
+        return "#00DF14";
     }
   }  
   function mapRadius(mag) {
@@ -63,5 +64,34 @@ d3.json(queryUrl, function(data) {
       return mag * 2;
     }
   }
-  
+  L.geoJson(data, {
+    pointToLayer: function(features, latlng) {
+      return L.circleMarker(latlng);
+    },
+
+    style: mapStyling,
+    onEachFeature: function(features, layer) {
+      layer.bindPopup("Magnitude: " + features.properties.mag + "<br>Location: " + features.properties.place);
+
+    }
+  }).addTo(myMap);
+
+  // Create legend
+  var legend = L.control({
+    position: "bottomleft"
+});
+
+legend.onAdd = function() {
+    var div = L.DomUtil.create("div", "info legend"),
+    grades = [0, 1, 2, 3, 4, 5];
+
+// Create legend
+for (var i = 0; i < grades.length; i++) {
+    div.innerHTML +=
+        '<i style="background:' + mapColor(grades[i] + 1) + '"></i> ' +
+        grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+}
+return div;
+};
+legend.addTo(myMap);
   });

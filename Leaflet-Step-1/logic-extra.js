@@ -32,8 +32,7 @@ d3.json(queryUrl, function(data) {
       else if (magnitude > 1) {
           return "yellow";
       }
-      else {return "green";}
-          
+      else {return "green";}     
   }
 });
 

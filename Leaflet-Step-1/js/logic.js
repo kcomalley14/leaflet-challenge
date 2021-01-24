@@ -63,4 +63,5 @@ d3.json(queryUrl, function(data) {
       return mag * 2;
     }
   }
+  
   });

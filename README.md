@@ -4,7 +4,7 @@
 
 ![2-BasicMap](Leaflet-Step-1/images/leaflet.png)
 
-This picture shows the map created with Leaflet. The USGS earthquake data was used 
+This picture shows the map created with Leaflet. The USGS earthquake data was used.
 
 1. **Get your data set**
 
